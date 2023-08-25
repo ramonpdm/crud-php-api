@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+
+# Evita que los directorios (carpetas)
+# de tu sitio web muestren una lista 
+# de archivos y subdirectorios
+Options -Indexes
+
+# Habilitar el motor de reescritura 
+# (RewriteEngine) para las reglas de 
+# redirección
+RewriteEngine On
+
+# ---------------------------------
+
+# Comprobar si el archivo o directorio solicitado 
+# no es un directorio existente
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Comprobar si el archivo con la extensión .php existe
+RewriteCond %{REQUEST_FILENAME}.php -f
+
+# Captura el nombre del archivo en minúsculas 
+# (solo letras minúsculas) y redirige a su correspondiente archivo .php
+# La bandera NC indica que la comparación no distingue 
+# entre mayúsculas y minúsculas (case-insensitive)
+RewriteRule ^([^/]+)/?$ $1.php [NC]
+
+# Agregar esta regla para manejar la URL con parámetro "id"
+RewriteRule ^([^/]+)/?([^/]*)/?$ index.php?controller=$1&id=$2 [L,QSA]
+</IfModule>
