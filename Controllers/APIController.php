@@ -100,6 +100,8 @@ class APIController
         $request_method = strtoupper($_SERVER["REQUEST_METHOD"]);
 
         switch ($request_method) {
+            case 'OPTIONS':
+                return 'options';
             case 'POST':
                 return 'insert';
             case 'PUT':
@@ -113,6 +115,20 @@ class APIController
             default:
                 return 'findAll';
         }
+    }
+
+    /** 
+     * Admite las peticiones Http al servidor 
+     * para responder a las solicitudes 
+     * preflight OPTIONS. 
+     * 
+     * @see /index.php - Linea 9
+     * 
+     * @return void 
+     */
+    protected function options()
+    {
+        return $this->sendOutput('', 200, array('HTTP/1.1 200 OK'));
     }
 
     /** 
