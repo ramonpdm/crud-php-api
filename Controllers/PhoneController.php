@@ -54,6 +54,15 @@ class PhoneController extends APIController implements iCRUD
      */
     public function insert()
     {
+        // Transferir los datos en JSON obtenidos
+        // de solicitudes Http a la varible POST
+        $this->php_input($_POST);
+
+        // Validar que se hayan decodificado los datos
+        if (empty($_POST)) {
+            return $this->sendOutput(array('message' => 'Los datos suministrados deben estar correctamente codificados en JSON. Favor validar la entrada.'), 400);
+        }
+
         $model = new PhoneModel();
         $contactModel = new ContactModel();
 
